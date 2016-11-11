@@ -18,7 +18,8 @@ RUN docker-php-ext-install \
 	opcache \
 	pdo_mysql \
 	soap \
-	zip
+	zip \
+	calendar
 
 # Oro php settings
 RUN { \
