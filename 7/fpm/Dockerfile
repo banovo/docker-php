@@ -21,7 +21,8 @@ RUN docker-php-ext-install \
 	opcache \
 	pdo_mysql \
 	soap \
-	zip
+	zip \
+	calendar
 
 RUN pecl install \
 		apcu-5.1.7 \
