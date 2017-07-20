@@ -1,12 +1,15 @@
 FROM php:5.6-fpm
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
-		nodejs \
+# apt-get update is called during the nodejs install script
+# See https://deb.nodesource.com/setup
+RUN wget -qO- https://deb.nodesource.com/setup | bash - \
+	&& apt-get install -y \
 		libicu-dev \
 		libmcrypt-dev \
 		libpng-dev \
 		libxml2-dev \
+		nodejs \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install extensions

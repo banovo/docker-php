@@ -1,8 +1,10 @@
 FROM php:7.1-cli
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
-		nodejs \
+# apt-get update is called during the nodejs install script
+# See https://deb.nodesource.com/setup
+RUN wget -qO- https://deb.nodesource.com/setup | bash - \
+	&& apt-get install -y \
 		libicu-dev \
 		zlib1g-dev \
 		libmcrypt-dev \
@@ -10,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 		libxml2-dev \
 		libicu52 \
 		zlib1g \
+		nodejs \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install extensions
