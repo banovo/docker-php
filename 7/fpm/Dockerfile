@@ -35,6 +35,8 @@ RUN docker-php-ext-install \
 	opcache \
 	pdo_mysql \
 	soap \
+	exif \
+	fileinfo \
 	zip
 
 RUN pecl install \
