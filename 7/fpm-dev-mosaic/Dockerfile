@@ -38,7 +38,6 @@ RUN set -xe \
 		intl \
 		mbstring \
 		mcrypt \
-		opcache \
 		pdo_mysql \
 		zip \
 	\
