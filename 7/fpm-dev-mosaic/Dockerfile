@@ -18,7 +18,7 @@ RUN set -xe \
 		libmcrypt-dev \
 		libpng-dev \
 		libxml2-dev \
-		libicu52 \
+		libicu55 \
 		zlib1g \
 		sudo \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
