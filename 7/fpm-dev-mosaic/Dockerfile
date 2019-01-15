@@ -42,7 +42,7 @@ RUN set -xe \
 		pdo_mysql \
 		zip \
 	\
-	&& docker-php-ext-enable --ini-name 05-opcache.ini \
+	&& docker-php-ext-enable \
 		opcache
 
 # PHP settings
