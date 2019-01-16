@@ -56,7 +56,7 @@ RUN { \
 		echo "date.timezone=Europe/Berlin"; \
 		echo "detect_unicode=off"; \
 		echo "xdebug.scream=off"; \
-	} > /usr/local/etc/php/conf.d/custom.ini
+	} > $PHP_INI_DIR/conf.d/custom.ini
 
 # Install composer
 RUN set -xe \
