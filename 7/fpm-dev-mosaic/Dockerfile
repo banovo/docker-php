@@ -20,7 +20,6 @@ RUN set -xe \
 		libicu57 \
 		zlib1g \
 		sudo \
-		libzip-dev \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install extensions
@@ -33,12 +32,10 @@ RUN set -xe \
 			--with-jpeg-dir=/usr/include/ \
 		\
 	\
-	&& docker-php-ext-configure zip --with-libzip; \
 	&& docker-php-ext-install -j$(nproc) \
 		gd \
 		intl \
 		mbstring \
-		mcrypt \
 		pdo_mysql \
 		zip
 
