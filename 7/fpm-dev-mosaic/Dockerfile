@@ -39,7 +39,7 @@ RUN set -xe \
 		mcrypt \
 		pdo_mysql \
 		zip \
-	; \
+	;
 
 RUN pecl install \
 		apcu-5.1.12 \
@@ -48,15 +48,15 @@ RUN pecl install \
     docker-php-ext-enable \
     	apcu \
     	opcache \
-    ; \
+    ;
 
 # PHP settings
-#RUN { \
-		#echo "memory_limit=1024M"; \
-		#echo "date.timezone=Europe/Berlin"; \
-		#echo "detect_unicode=off"; \
-		#echo "xdebug.scream=off"; \
-	#} > $PHP_INI_DIR/conf.d/custom.ini
+RUN { \
+		echo "memory_limit=1024M"; \
+		echo "date.timezone=Europe/Berlin"; \
+		echo "detect_unicode=off"; \
+		echo "xdebug.scream=off"; \
+	} > $PHP_INI_DIR/conf.d/custom.ini
 
 # Install composer
 RUN set -xe \
