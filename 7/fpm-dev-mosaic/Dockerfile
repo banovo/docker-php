@@ -41,9 +41,8 @@ RUN set -xe \
 		zip \
 	; \
 
-ARG APCU_VERSION=5.1.12
 RUN pecl install \
-		apcu-${APCU_VERSION} \
+		apcu-5.1.12 \
 	; \
     pecl clear-cache; \
     docker-php-ext-enable \
