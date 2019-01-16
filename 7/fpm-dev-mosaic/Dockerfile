@@ -51,12 +51,12 @@ RUN pecl install \
     ; \
 
 # PHP settings
-RUN { \
-		echo "memory_limit=1024M"; \
-		echo "date.timezone=Europe/Berlin"; \
-		echo "detect_unicode=off"; \
-		echo "xdebug.scream=off"; \
-	} > $PHP_INI_DIR/conf.d/custom.ini
+#RUN { \
+		#echo "memory_limit=1024M"; \
+		#echo "date.timezone=Europe/Berlin"; \
+		#echo "detect_unicode=off"; \
+		#echo "xdebug.scream=off"; \
+	#} > $PHP_INI_DIR/conf.d/custom.ini
 
 # Install composer
 RUN set -xe \
