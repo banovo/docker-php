@@ -10,7 +10,10 @@ ENV NODEREPO node_8.x
 RUN set -xe \
 	\
 	# Add nodejs repo (jessie is coming from php) and deps to it
-	&& apt-get update && apt-get install -y --force-yes apt-transport-https --no-install-recommends \
+	&& apt-get update && apt-get install -y --force-yes \
+    	    apt-transport-https \
+    	    gnupg2 \
+    --no-install-recommends \
 	&& php -r "echo file_get_contents('https://deb.nodesource.com/gpgkey/nodesource.gpg.key');" | apt-key add - \
 	&& echo "deb https://deb.nodesource.com/${NODEREPO} jessie main" > /etc/apt/sources.list.d/nodesource.list \
 	&& echo "deb-src https://deb.nodesource.com/${NODEREPO} jessie main" >> /etc/apt/sources.list.d/nodesource.list \
@@ -25,7 +28,7 @@ RUN set -xe \
 		libmcrypt-dev \
 		libpng-dev \
 		libxml2-dev \
-		libicu52 \
+		libicu57 \
 		zlib1g \
 		nodejs \
 		sudo \

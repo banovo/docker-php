@@ -1,23 +1,12 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
+# Set environmental variables
 ENV LOCAL_UID 33
-
-ENV NODEREPO node_8.x
+ENV COMPOSER_HOME /root/composer
+ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
 
 # Install dependencies
-# apt-get update is called during the nodejs install script
-# See https://deb.nodesource.com/setup
 RUN set -xe \
-	\
-	# Add nodejs repo (jessie is coming from php) and deps to it
-	&& apt-get update && apt-get install -y --force-yes \
-	    apt-transport-https \
-	    gnupg2 \
-	--no-install-recommends \
-	&& php -r "echo file_get_contents('https://deb.nodesource.com/gpgkey/nodesource.gpg.key');" | apt-key add - \
-	&& echo "deb https://deb.nodesource.com/${NODEREPO} jessie main" > /etc/apt/sources.list.d/nodesource.list \
-	&& echo "deb-src https://deb.nodesource.com/${NODEREPO} jessie main" >> /etc/apt/sources.list.d/nodesource.list \
-	\
 	# Install deps
 	&& apt-get update && apt-get install -y --force-yes \
 		libicu-dev \
@@ -30,7 +19,6 @@ RUN set -xe \
 		libxml2-dev \
 		libicu57 \
 		zlib1g \
-		nodejs \
 		sudo \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
@@ -48,28 +36,35 @@ RUN set -xe \
 		gd \
 		intl \
 		mbstring \
-		mcrypt \
-		opcache \
 		pdo_mysql \
-		soap \
-		exif \
-		fileinfo \
 		zip
 
 RUN pecl install \
-		apcu-5.1.7 \
-	&& docker-php-ext-enable --ini-name 05-opcache.ini \
-		opcache \
-	&& docker-php-ext-enable --ini-name 20-apcu.ini \
-		apcu
+		apcu-5.1.12 \
+	; \
+    pecl clear-cache; \
+    docker-php-ext-enable \
+    	apcu \
+    	opcache
 
-# Oro php settings
+# PHP settings
 RUN { \
 		echo "memory_limit=1024M"; \
 		echo "date.timezone=Europe/Berlin"; \
 		echo "detect_unicode=off"; \
 		echo "xdebug.scream=off"; \
-	} > /usr/local/etc/php/conf.d/custom.ini
+	} > $PHP_INI_DIR/conf.d/custom.ini
+
+# Install composer
+RUN set -xe \
+	&& apt-get update && apt-get install -y git libfontconfig1 --no-install-recommends && rm -r /var/lib/apt/lists/* \
+	&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install prestissimo for faster composer installations
+RUN composer global require "hirak/prestissimo:^0.3"
+
+# Install phpunit
+RUN composer global require phpunit/phpunit 6.0.*
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
