@@ -38,7 +38,8 @@ RUN set -xe \
 		mbstring \
 		mcrypt \
 		pdo_mysql \
-		zip
+		zip \
+	; \
 
 RUN pecl install \
 		apcu-5.1.12 \
