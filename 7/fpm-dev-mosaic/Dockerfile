@@ -5,7 +5,6 @@ ENV LOCAL_UID 33
 ENV COMPOSER_HOME /root/composer
 ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
 
-
 # Install dependencies
 RUN set -xe \
 	# Install deps
@@ -39,10 +38,16 @@ RUN set -xe \
 		mbstring \
 		mcrypt \
 		pdo_mysql \
-		zip \
-	\
-	&& docker-php-ext-enable \
-		opcache
+		zip
+
+RUN pecl install \
+		apcu-5.1.12 \
+	; \
+    pecl clear-cache; \
+    docker-php-ext-enable \
+    	apcu \
+    	opcache \
+    ; \
 
 # PHP settings
 RUN { \
