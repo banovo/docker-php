@@ -38,8 +38,7 @@ RUN set -xe \
 		mbstring \
 		mcrypt \
 		pdo_mysql \
-		zip \
-	;
+		zip
 
 RUN pecl install \
 		apcu-5.1.12 \
@@ -47,8 +46,7 @@ RUN pecl install \
     pecl clear-cache; \
     docker-php-ext-enable \
     	apcu \
-    	opcache \
-    ;
+    	opcache
 
 # PHP settings
 RUN { \
