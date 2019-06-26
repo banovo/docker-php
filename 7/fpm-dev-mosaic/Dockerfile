@@ -20,7 +20,7 @@ RUN set -xe \
 		libicu57 \
 		zlib1g \
 		sudo \
-		ssh-client \
+		openssh-client \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install extensions
