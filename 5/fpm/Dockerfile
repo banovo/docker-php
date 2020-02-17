@@ -32,6 +32,8 @@ RUN set -xe \
 		zlib1g \
 		nodejs \
 		sudo \
+		libc-client-dev \
+		libkrb5-dev \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 # Install extensions
@@ -42,6 +44,10 @@ RUN set -xe \
 			--with-freetype-dir=/usr/include/ \
 			--with-png-dir=/usr/include/ \
 			--with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure \
+		imap \
+			--with-kerberos \
+			--with-imap-ssl \
 		\
 	\
 	&& docker-php-ext-install -j$(nproc) \
@@ -54,7 +60,8 @@ RUN set -xe \
 		soap \
 		exif \
 		fileinfo \
-		zip
+		zip \
+		imap
 
 # Oro php settings
 RUN { \
